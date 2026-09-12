@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fart Button</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💨</text></svg>">
     <style>
         * {
             margin: 0;
@@ -88,9 +89,6 @@
 
         /* Main View */
         .main-view {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             gap: 30px;
         }
 
@@ -137,9 +135,6 @@
 
         /* Soundboard View */
         .soundboard-view {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             gap: 30px;
             width: 100%;
             max-width: 900px;
@@ -201,6 +196,17 @@
             margin-top: 5px;
         }
 
+        /* Solo View */
+        .solo-view {
+            gap: 60px;
+        }
+
+        .solo-button {
+            width: 340px;
+            height: 340px;
+            font-size: 0;
+        }
+
         /* Navigation */
         .nav-buttons {
             display: flex;
@@ -245,6 +251,7 @@
             <div class="button-label">FART ME!</div>
             <div class="nav-buttons">
                 <button class="nav-btn" onclick="switchView('soundboard')">🎵 Soundboard</button>
+                <button class="nav-btn" onclick="switchView('solo')">🔴 Just The Button</button>
             </div>
         </div>
 
@@ -256,51 +263,35 @@
                 <button class="nav-btn" onclick="switchView('main')">← Back</button>
             </div>
         </div>
+
+        <!-- Solo View -->
+        <div class="view solo-view" id="soloView">
+            <button class="fart-button solo-button" id="soloFartBtn"></button>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="switchView('main')">← Back</button>
+            </div>
+        </div>
     </div>
 
     <script>
         const FartSounds = {
             farts: [
-                { name: 'Classic', pitch: 150, duration: 0.5 },
-                { name: 'Squeaky', pitch: 280, duration: 0.3 },
-                { name: 'Rumble', pitch: 80, duration: 0.8 },
-                { name: 'Pop', pitch: 200, duration: 0.2 },
-                { name: 'Wet', pitch: 120, duration: 0.6 },
-                { name: 'Foghorn', pitch: 100, duration: 1.0 },
-                { name: 'Soprano', pitch: 320, duration: 0.4 },
-                { name: 'Double', pitch: 140, duration: 0.9 },
-                { name: 'Thunder', pitch: 60, duration: 1.2 },
-                { name: 'Trumpet', pitch: 250, duration: 0.7 }
+                { name: 'Classic', file: 'sounds/classic.wav' },
+                { name: 'Squeaky', file: 'sounds/squeaky.wav' },
+                { name: 'Rumble', file: 'sounds/rumble.wav' },
+                { name: 'Pop', file: 'sounds/pop.wav' },
+                { name: 'Wet', file: 'sounds/wet.wav' },
+                { name: 'Foghorn', file: 'sounds/foghorn.wav' },
+                { name: 'Soprano', file: 'sounds/soprano.wav' },
+                { name: 'Double', file: 'sounds/double.wav' },
+                { name: 'Thunder', file: 'sounds/thunder.wav' },
+                { name: 'Trumpet', file: 'sounds/trumpet.wav' }
             ],
 
             playFart(index) {
                 const fart = this.farts[index];
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(fart.pitch, audioContext.currentTime);
-
-                // Pitch modulation for fart effect
-                oscillator.frequency.exponentialRampToValueAtTime(
-                    fart.pitch * 0.7,
-                    audioContext.currentTime + fart.duration
-                );
-
-                // Volume envelope
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(
-                    0.01,
-                    audioContext.currentTime + fart.duration
-                );
-
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + fart.duration);
+                const audio = new Audio(fart.file);
+                audio.play().catch(err => console.log('Audio play failed:', err));
             }
         };
 
@@ -310,14 +301,17 @@
                 document.getElementById('mainView').classList.add('active');
             } else if (view === 'soundboard') {
                 document.getElementById('soundboardView').classList.add('active');
+            } else if (view === 'solo') {
+                document.getElementById('soloView').classList.add('active');
             }
         }
 
-        // Main fart button
-        document.getElementById('mainFartBtn').addEventListener('click', () => {
-            const randomIndex = Math.floor(Math.random() * FartSounds.farts.length);
-            FartSounds.playFart(randomIndex);
-        });
+        function playRandomFart() {
+            FartSounds.playFart(Math.floor(Math.random() * FartSounds.farts.length));
+        }
+
+        document.getElementById('mainFartBtn').addEventListener('click', playRandomFart);
+        document.getElementById('soloFartBtn').addEventListener('click', playRandomFart);
 
         // Initialize soundboard
         function initSoundboard() {

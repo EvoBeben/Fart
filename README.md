@@ -7,6 +7,9 @@ A hilariously fun web app featuring a big red fart button with 10 different fart
 ### Main View
 Click the **big red button** to play a random fart sound! The button is tempting, red, and begging to be clicked.
 
+### Just The Button View
+Click **🔴 Just The Button** for a distraction-free view: one giant red button, nothing else. Every press fires a random fart.
+
 ### Soundboard View
 Click **🎵 Soundboard** to access all 10 unique fart sounds:
 1. **Classic** - Deep pitch fart
@@ -25,7 +28,7 @@ Click **🎵 Soundboard** to access all 10 unique fart sounds:
 - 🔴 **Big Red Button** - Irresistibly clickable
 - 🖤 **Black Background** - Classic dark theme
 - 💚 **Animated Green Smoke** - Booger green smoke animation
-- 🎵 **10 Unique Farts** - Generated with Web Audio API
+- 🎵 **10 Unique Farts** - Real audio files in `sounds/`, loaded on demand
 - 🎯 **Easy Navigation** - Flip between main view and soundboard
 - ✨ **Smooth Animations** - Glow effects and transitions
 
