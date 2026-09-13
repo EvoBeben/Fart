@@ -11,24 +11,26 @@ Click the **big red button** to play a random fart sound! The button is tempting
 Click **🔴 Just The Button** for a distraction-free view: one giant red button, nothing else. Every press fires a random fart.
 
 ### Soundboard View
-Click **🎵 Soundboard** to access all 10 unique fart sounds:
-1. **Classic** - Deep pitch fart
-2. **Squeaky** - High-pitched squeak
-3. **Rumble** - Low, long rumble
-4. **Pop** - Quick popping sound
-5. **Wet** - Wet fart effect
-6. **Foghorn** - Foghorn-like blast
-7. **Soprano** - Ultra high soprano fart
-8. **Double** - Two-note fart
-9. **Thunder** - Deep thunder fart
-10. **Trumpet** - Trumpet-like sound
+Click **🎵 Soundboard** to access all 10 fart sounds. A **← Back** button sits at
+the top of the board, so you can always get back to the red button.
+
+1. **Toot** - Short and polite
+2. **Squeaker** - High-pitched squeal
+3. **Wet One** - Regrettably moist
+4. **Dry One** - Crisp and clean
+5. **Pull My Finger** - The classic
+6. **Ripper** - Tears right through
+7. **Trumpet** - Brassy and proud
+8. **Bubbler** - Gurgling and ominous
+9. **Thunder** - Seven seconds of rumble
+10. **The Marathon** - Nine seconds. Commit to it.
 
 ## 🎨 Features
 
 - 🔴 **Big Red Button** - Irresistibly clickable
 - 🖤 **Black Background** - Classic dark theme
 - 💚 **Animated Green Smoke** - Booger green smoke animation
-- 🎵 **10 Unique Farts** - Real audio files in `sounds/`, loaded on demand
+- 🎵 **10 Real Farts** - Actual recorded audio in `sounds/`, loaded on demand
 - 🎯 **Easy Navigation** - Flip between main view and soundboard
 - ✨ **Smooth Animations** - Glow effects and transitions
 
@@ -50,6 +52,20 @@ python3 -m http.server 8000
 # Then open http://localhost:8000
 ```
 
+## 🔊 Sound Credits
+
+The fart sounds are third-party audio, redistributed under their original
+licenses. Full attribution and the list of modifications are in [NOTICE](NOTICE).
+
+- Nine sounds derive from the [`terminalfart`](https://www.npmjs.com/package/terminalfart)
+  npm package — Apache-2.0, Copyright 2026 Electric Wolfe Marshmallow Hypertext
+  (license text in [LICENSE-APACHE-2.0](LICENSE-APACHE-2.0)).
+- `pull-my-finger.mp3` derives from the [`pull-my-finger`](https://www.npmjs.com/package/pull-my-finger)
+  npm package — MIT.
+
+All files were loudness-normalized, downmixed to mono and re-encoded; `squeaker.mp3`
+is additionally pitch-shifted. See [NOTICE](NOTICE) for the per-file mapping.
+
 ---
 
-Made with 💨 and Web Audio API
+Made with 💨

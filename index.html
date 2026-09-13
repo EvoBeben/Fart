@@ -15,12 +15,12 @@
         body {
             font-family: 'Arial', sans-serif;
             background: #0a0a0a;
-            overflow: hidden;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            padding: 24px 16px;
         }
 
         /* Green smoke animation background */
@@ -62,6 +62,7 @@
         }
 
         .container {
+            width: 100%;
             z-index: 10;
             text-align: center;
             display: flex;
@@ -140,6 +141,14 @@
             max-width: 900px;
         }
 
+        .soundboard-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .soundboard-title {
             font-size: 32px;
             color: #00ff50;
@@ -149,10 +158,17 @@
 
         .soundboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             width: 100%;
-            padding: 20px;
+        }
+
+        @media (max-width: 720px) {
+            .soundboard-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 420px) {
+            .soundboard-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .fart-tile {
@@ -257,11 +273,11 @@
 
         <!-- Soundboard View -->
         <div class="view soundboard-view" id="soundboardView">
-            <div class="soundboard-title">🎵 FART SOUNDBOARD 🎵</div>
-            <div class="soundboard-grid" id="soundboardGrid"></div>
-            <div class="nav-buttons">
+            <div class="soundboard-header">
                 <button class="nav-btn" onclick="switchView('main')">← Back</button>
+                <div class="soundboard-title">🎵 FART SOUNDBOARD 🎵</div>
             </div>
+            <div class="soundboard-grid" id="soundboardGrid"></div>
         </div>
 
         <!-- Solo View -->
@@ -276,22 +292,25 @@
     <script>
         const FartSounds = {
             farts: [
-                { name: 'Classic', file: 'sounds/classic.wav' },
-                { name: 'Squeaky', file: 'sounds/squeaky.wav' },
-                { name: 'Rumble', file: 'sounds/rumble.wav' },
-                { name: 'Pop', file: 'sounds/pop.wav' },
-                { name: 'Wet', file: 'sounds/wet.wav' },
-                { name: 'Foghorn', file: 'sounds/foghorn.wav' },
-                { name: 'Soprano', file: 'sounds/soprano.wav' },
-                { name: 'Double', file: 'sounds/double.wav' },
-                { name: 'Thunder', file: 'sounds/thunder.wav' },
-                { name: 'Trumpet', file: 'sounds/trumpet.wav' }
+                { name: 'Toot', file: 'sounds/toot.mp3' },
+                { name: 'Squeaker', file: 'sounds/squeaker.mp3' },
+                { name: 'Wet One', file: 'sounds/wet.mp3' },
+                { name: 'Dry One', file: 'sounds/dry.mp3' },
+                { name: 'Pull My Finger', file: 'sounds/pull-my-finger.mp3' },
+                { name: 'Ripper', file: 'sounds/ripper.mp3' },
+                { name: 'Trumpet', file: 'sounds/trumpet.mp3' },
+                { name: 'Bubbler', file: 'sounds/bubbler.mp3' },
+                { name: 'Thunder', file: 'sounds/thunder.mp3' },
+                { name: 'The Marathon', file: 'sounds/marathon.mp3' }
             ],
 
             playFart(index) {
                 const fart = this.farts[index];
-                const audio = new Audio(fart.file);
-                audio.play().catch(err => console.log('Audio play failed:', err));
+                if (this.current) {
+                    this.current.pause();
+                }
+                this.current = new Audio(fart.file);
+                this.current.play().catch(err => console.log('Audio play failed:', err));
             }
         };
 

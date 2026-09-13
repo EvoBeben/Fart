@@ -1,0 +1,51 @@
+Fart Button
+===========
+
+Sound assets in sounds/ are third-party works redistributed under their
+original licenses.
+
+-------------------------------------------------------------------------
+toot.mp3, squeaker.mp3, wet.mp3, dry.mp3, ripper.mp3, trumpet.mp3,
+bubbler.mp3, thunder.mp3, marathon.mp3
+-------------------------------------------------------------------------
+
+Derived from the "terminalfart" npm package (v1.1.1).
+Licensed under the Apache License, Version 2.0.
+https://www.npmjs.com/package/terminalfart
+
+    TerminalFart
+    Copyright 2026 Electric Wolfe Marshmallow Hypertext
+
+    This product includes software developed by
+    Electric Wolfe Marshmallow Hypertext.
+
+A copy of the Apache License, Version 2.0 is included at LICENSE-APACHE-2.0,
+and may also be obtained at http://www.apache.org/licenses/LICENSE-2.0
+
+MODIFICATIONS (per Apache-2.0 section 4(b)): all files listed above were
+modified from the originals. Each was loudness-normalized to -16 LUFS,
+downmixed to mono, resampled to 44.1 kHz, re-encoded at 96 kbps, given a
+short output fade, and renamed. squeaker.mp3 was additionally pitch-shifted
+up and tempo-adjusted from the original toot.mp3.
+
+Original filename mapping:
+    toot.mp3      <- sounds/toot.mp3
+    squeaker.mp3  <- sounds/toot.mp3  (pitch-shifted)
+    wet.mp3       <- sounds/wet.mp3
+    dry.mp3       <- sounds/dry.mp3
+    ripper.mp3    <- sounds/needs-you.mp3
+    trumpet.mp3   <- sounds/success.mp3
+    bubbler.mp3   <- sounds/poop-toot.mp3
+    thunder.mp3   <- sounds/hellacious.mp3
+    marathon.mp3  <- sounds/done-long.mp3
+
+-------------------------------------------------------------------------
+pull-my-finger.mp3
+-------------------------------------------------------------------------
+
+Derived from the "pull-my-finger" npm package (v1.0.2), file sound.mp3.
+Licensed under the MIT License.
+https://www.npmjs.com/package/pull-my-finger
+
+MODIFICATIONS: loudness-normalized to -16 LUFS, downmixed to mono,
+resampled to 44.1 kHz, re-encoded at 96 kbps, and renamed.
