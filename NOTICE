@@ -51,6 +51,18 @@ MODIFICATIONS: loudness-normalized to -16 LUFS, downmixed to mono,
 resampled to 44.1 kHz, re-encoded at 96 kbps, and renamed.
 
 -------------------------------------------------------------------------
+sounds/memes/
+-------------------------------------------------------------------------
+
+Sounds in sounds/memes/ were supplied by the repository owner, not sourced
+by this project. Their origin and licensing are the supplier's to determine;
+no license claim is made here.
+
+    vine-boom.mp3 - supplied by repository owner.
+                    Modified: loudness-normalized to -16 LUFS, downmixed to
+                    mono, resampled to 44.1 kHz, re-encoded at 96 kbps.
+
+-------------------------------------------------------------------------
 Apache License, Version 2.0 - full text
 -------------------------------------------------------------------------
 

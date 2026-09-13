@@ -25,6 +25,24 @@ the top of the board, so you can always get back to the red button.
 9. **Thunder** - Seven seconds of rumble
 10. **The Marathon** - Nine seconds. Commit to it.
 
+### Meme Soundboard View
+Click **😎 Memes** for the meme board. It has its own **← Back** button and
+grows as sounds are added.
+
+1. **Vine Boom**
+
+**Adding more meme sounds:** drop an MP3 into `sounds/memes/` and add one line
+to the `MEMES` array in `index.html`:
+
+```js
+const MEMES = [
+    { name: 'Vine Boom', file: 'sounds/memes/vine-boom.mp3' },
+    { name: 'Your Sound', file: 'sounds/memes/your-sound.mp3' }
+];
+```
+
+The grid sizes itself to the number of tiles, so no layout changes are needed.
+
 ## 🎨 Features
 
 - 🔴 **Big Red Button** - Irresistibly clickable

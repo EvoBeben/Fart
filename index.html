@@ -163,12 +163,21 @@
             width: 100%;
         }
 
+        /* Meme board grows as sounds are added, so tiles keep a fixed size
+           and wrap instead of stretching when there are only a few. */
+        .meme-grid {
+            grid-template-columns: repeat(auto-fit, 170px);
+            justify-content: center;
+        }
+
         @media (max-width: 720px) {
             .soundboard-grid { grid-template-columns: repeat(3, 1fr); }
+            .meme-grid { grid-template-columns: repeat(auto-fit, 140px); }
         }
 
         @media (max-width: 420px) {
             .soundboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .meme-grid { grid-template-columns: repeat(auto-fit, 130px); }
         }
 
         .fart-tile {
@@ -266,7 +275,8 @@
             <button class="fart-button" id="mainFartBtn">💨</button>
             <div class="button-label">FART ME!</div>
             <div class="nav-buttons">
-                <button class="nav-btn" onclick="switchView('soundboard')">🎵 Soundboard</button>
+                <button class="nav-btn" onclick="switchView('soundboard')">🎵 Farts</button>
+                <button class="nav-btn" onclick="switchView('memes')">😎 Memes</button>
                 <button class="nav-btn" onclick="switchView('solo')">🔴 Just The Button</button>
             </div>
         </div>
@@ -280,6 +290,15 @@
             <div class="soundboard-grid" id="soundboardGrid"></div>
         </div>
 
+        <!-- Meme Soundboard View -->
+        <div class="view soundboard-view" id="memeView">
+            <div class="soundboard-header">
+                <button class="nav-btn" onclick="switchView('main')">← Back</button>
+                <div class="soundboard-title">😎 MEME SOUNDBOARD 😎</div>
+            </div>
+            <div class="soundboard-grid meme-grid" id="memeGrid"></div>
+        </div>
+
         <!-- Solo View -->
         <div class="view solo-view" id="soloView">
             <button class="fart-button solo-button" id="soloFartBtn"></button>
@@ -290,61 +309,68 @@
     </div>
 
     <script>
-        const FartSounds = {
-            farts: [
-                { name: 'Toot', file: 'sounds/toot.mp3' },
-                { name: 'Squeaker', file: 'sounds/squeaker.mp3' },
-                { name: 'Wet One', file: 'sounds/wet.mp3' },
-                { name: 'Dry One', file: 'sounds/dry.mp3' },
-                { name: 'Pull My Finger', file: 'sounds/pull-my-finger.mp3' },
-                { name: 'Ripper', file: 'sounds/ripper.mp3' },
-                { name: 'Trumpet', file: 'sounds/trumpet.mp3' },
-                { name: 'Bubbler', file: 'sounds/bubbler.mp3' },
-                { name: 'Thunder', file: 'sounds/thunder.mp3' },
-                { name: 'The Marathon', file: 'sounds/marathon.mp3' }
-            ],
+        const FARTS = [
+            { name: 'Toot', file: 'sounds/toot.mp3' },
+            { name: 'Squeaker', file: 'sounds/squeaker.mp3' },
+            { name: 'Wet One', file: 'sounds/wet.mp3' },
+            { name: 'Dry One', file: 'sounds/dry.mp3' },
+            { name: 'Pull My Finger', file: 'sounds/pull-my-finger.mp3' },
+            { name: 'Ripper', file: 'sounds/ripper.mp3' },
+            { name: 'Trumpet', file: 'sounds/trumpet.mp3' },
+            { name: 'Bubbler', file: 'sounds/bubbler.mp3' },
+            { name: 'Thunder', file: 'sounds/thunder.mp3' },
+            { name: 'The Marathon', file: 'sounds/marathon.mp3' }
+        ];
 
-            playFart(index) {
-                const fart = this.farts[index];
-                if (this.current) {
-                    this.current.pause();
-                }
-                this.current = new Audio(fart.file);
-                this.current.play().catch(err => console.log('Audio play failed:', err));
-            }
+        // Add new meme sounds here; the board and its grid size follow.
+        const MEMES = [
+            { name: 'Vine Boom', file: 'sounds/memes/vine-boom.mp3' }
+        ];
+
+        let currentAudio = null;
+
+        function play(sound) {
+            if (currentAudio) currentAudio.pause();
+            currentAudio = new Audio(sound.file);
+            currentAudio.play().catch(err => console.log('Audio play failed:', err));
+        }
+
+        const VIEWS = {
+            main: 'mainView',
+            soundboard: 'soundboardView',
+            memes: 'memeView',
+            solo: 'soloView'
         };
 
         function switchView(view) {
+            if (currentAudio) currentAudio.pause();
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            if (view === 'main') {
-                document.getElementById('mainView').classList.add('active');
-            } else if (view === 'soundboard') {
-                document.getElementById('soundboardView').classList.add('active');
-            } else if (view === 'solo') {
-                document.getElementById('soloView').classList.add('active');
-            }
+            document.getElementById(VIEWS[view]).classList.add('active');
         }
 
         function playRandomFart() {
-            FartSounds.playFart(Math.floor(Math.random() * FartSounds.farts.length));
+            play(FARTS[Math.floor(Math.random() * FARTS.length)]);
         }
 
         document.getElementById('mainFartBtn').addEventListener('click', playRandomFart);
         document.getElementById('soloFartBtn').addEventListener('click', playRandomFart);
 
-        // Initialize soundboard
-        function initSoundboard() {
-            const grid = document.getElementById('soundboardGrid');
-            FartSounds.farts.forEach((fart, index) => {
+        function buildBoard(gridId, sounds) {
+            const grid = document.getElementById(gridId);
+            sounds.forEach((sound, index) => {
                 const tile = document.createElement('button');
                 tile.className = 'fart-tile';
-                tile.innerHTML = `<div class="tile-number">${index + 1}</div><div class="tile-label">${fart.name}</div>`;
-                tile.addEventListener('click', () => FartSounds.playFart(index));
+                tile.innerHTML =
+                    `<div class="tile-number">${index + 1}</div>` +
+                    `<div class="tile-label"></div>`;
+                tile.querySelector('.tile-label').textContent = sound.name;
+                tile.addEventListener('click', () => play(sound));
                 grid.appendChild(tile);
             });
         }
 
-        initSoundboard();
+        buildBoard('soundboardGrid', FARTS);
+        buildBoard('memeGrid', MEMES);
     </script>
 </body>
 </html>
